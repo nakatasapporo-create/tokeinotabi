@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#163a67">
+  <meta name="description" content="時計を動かしながら、何分後・何時間後・何分前・何時間前を学べる小学3年生向けアプリ。">
+  <title>とけいのたび | 時計と時こくの学習</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='29' fill='%23163a67'/%3E%3Ccircle cx='32' cy='32' r='24' fill='%23fff'/%3E%3Cpath d='M32 13v19l13 7' fill='none' stroke='%23f0783c' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='32' cy='32' r='3' fill='%23163a67'/%3E%3C/svg%3E">
+  <style>
+    :root{font-family:ui-rounded,"Hiragino Maru Gothic ProN","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,sans-serif;color:#173452;background:#eaf3fb;font-size:16px}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh}button,select{font:inherit}button{cursor:pointer}button:focus-visible,select:focus-visible{outline:3px solid #ff9d47;outline-offset:3px}
+    .app{max-width:1440px;margin:auto;padding:20px clamp(16px,3vw,42px) 42px}
+    .header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px}.brand{display:flex;align-items:center;gap:13px}.brand-mark{width:48px;height:48px;border-radius:15px;background:#163a67;display:grid;place-items:center;color:#fff;font-size:28px;box-shadow:0 5px 0 #aecae3}.brand h1{font-size:clamp(1.35rem,2.4vw,1.8rem);margin:0;line-height:1.2;letter-spacing:.03em}.brand small{font-size:.85rem;font-weight:700;color:#52718d}.header-note{color:#51708b;font-size:.88rem;font-weight:700}
+    .tabs{display:flex;gap:8px;margin-bottom:16px}.tab{border:2px solid transparent;border-radius:16px 16px 0 0;padding:12px 26px;background:#d9e9f7;color:#355a7e;font-weight:800;font-size:1rem;min-height:49px}.tab[aria-selected="true"]{background:#fff;color:#163a67;border-color:#b4d0e8;border-bottom-color:#fff;position:relative;z-index:1}
+    .panel{background:#fff;border:2px solid #b4d0e8;border-radius:24px;box-shadow:0 10px 30px #16416b13;overflow:hidden}.explore{margin-top:-2px}.control-bar{padding:18px 22px;border-bottom:2px solid #e6f0f8;display:flex;align-items:flex-start;gap:22px;flex-wrap:wrap;background:#fcfeff}.control-group{display:flex;flex-direction:column;gap:8px}.group-label{font-size:.85rem;font-weight:800;color:#52718d}.time-select{display:flex;align-items:center;gap:6px;font-weight:800}.time-select select{height:48px;border:2px solid #b7cfe3;background:#fff;border-radius:12px;padding:0 8px;color:#183b60;font-size:1.05rem;font-weight:800;min-width:66px}.operation-grid{display:flex;flex-wrap:wrap;gap:7px}.op-button,.amount-button{border:2px solid #c6d9e9;background:#f4f9fd;color:#24476c;border-radius:12px;min-height:47px;padding:8px 13px;font-weight:800;white-space:nowrap}.op-button.active{background:#163a67;color:#fff;border-color:#163a67}.amount-control{display:flex;align-items:center;gap:7px}.stepper{width:45px;height:47px;border:2px solid #b5cee2;background:#fff;border-radius:12px;color:#16416b;font-size:1.5rem;font-weight:800;line-height:1}.amount-value{min-width:88px;text-align:center;padding:10px 8px;border-radius:11px;background:#ffedc7;color:#7d4300;font-size:1.1rem;font-weight:900}
+    .study-layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(290px,.8fr);gap:0}.stage{padding:20px 24px 26px;min-width:0}.question-label{font-size:.83rem;letter-spacing:.08em;color:#5682a5;font-weight:900;margin:0 0 4px}.question{font-size:clamp(1.15rem,2vw,1.55rem);font-weight:900;margin:0 0 15px;line-height:1.4}.clocks{display:flex;align-items:center;justify-content:center;gap:clamp(8px,2vw,22px);min-width:0}.clock-card{text-align:center;flex:1;min-width:0;max-width:320px}.clock-card.current{max-width:350px}.clock-caption{display:inline-block;padding:5px 15px;border-radius:99px;background:#e7f1fb;color:#244e78;font-size:.89rem;font-weight:900;margin-bottom:9px}.current .clock-caption{background:#fff0ca;color:#8b4e00}.clock-wrap{width:min(100%,260px);margin:auto;aspect-ratio:1}.current .clock-wrap{width:min(100%,286px)}.clock-svg{display:block;width:100%;height:100%;filter:drop-shadow(0 7px 0 #dbe9f4)}.time-readout{font-size:clamp(1rem,2vw,1.35rem);font-weight:900;margin-top:12px}.current .time-readout{color:#dc5e20}.travel-sign{width:55px;flex:none;display:grid;place-items:center;color:#e37633;font-size:2.3rem;font-weight:900;padding-bottom:35px}.progress{height:13px;border-radius:99px;background:#e4eef7;overflow:hidden;margin:19px 3px 9px}.progress-fill{height:100%;background:linear-gradient(90deg,#48afd5,#f4a63d);border-radius:99px;transition:width .35s}.progress-text{font-size:.88rem;color:#52718d;font-weight:800;margin:0 3px}.stage-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.primary,.secondary{min-height:56px;border-radius:15px;padding:10px 21px;font-weight:900;font-size:1rem}.primary{border:0;background:#ee7138;color:white;box-shadow:0 5px 0 #bd4e20}.primary:active{transform:translateY(3px);box-shadow:0 2px 0 #bd4e20}.primary:disabled{background:#88bca1;box-shadow:0 5px 0 #4f9471;cursor:default}.secondary{border:2px solid #b8d1e5;background:#fff;color:#255277}.secondary:disabled{opacity:.45;cursor:default}
+    .drag-clock{touch-action:none;user-select:none}.hand-hit{stroke:transparent;stroke-width:54;stroke-linecap:round;pointer-events:stroke;cursor:grab}.hand-knob{cursor:grab}.drag-clock.dragging .hand-hit,.drag-clock.dragging .hand-knob{cursor:grabbing}.hand-focus:focus-visible{outline:none}.hand-focus:focus-visible .hand-glow{stroke:#ffae3e;stroke-width:5}.instruction{display:flex;align-items:center;gap:10px;margin:12px 0 0;background:#fff1cd;color:#744713;border-radius:14px;padding:10px 14px;font-weight:900;line-height:1.45}.instruction-icon{font-size:1.45rem}.instruction strong{color:#d15a25}.stage-actions{margin-top:12px}
+    .guide{background:#f3f9fe;border-left:2px solid #e0edf7;padding:24px 24px 26px;display:flex;flex-direction:column}.guide h2{margin:0 0 5px;font-size:1.16rem}.guide-intro{color:#55728d;font-size:.9rem;line-height:1.5;margin:0 0 17px}.steps{display:grid;gap:10px}.step{display:flex;align-items:flex-start;gap:10px;border-radius:15px;border:2px solid #d7e8f5;background:white;padding:12px}.step.done{border-color:#82c5df;background:#e7f8fc}.step.next{border-color:#f5b964;background:#fff8e8}.step-number{display:grid;place-items:center;flex:none;width:30px;height:30px;border-radius:50%;background:#c9e2f2;color:#21527a;font-weight:900}.step.done .step-number{background:#1f93b9;color:white}.step.next .step-number{background:#f4a23b;color:#fff}.step-copy{font-size:.94rem;line-height:1.45;font-weight:800}.step-copy small{display:block;font-size:.8rem;color:#56758e;margin-top:3px}.tip{margin-top:auto;padding:14px 16px;background:#e2edf9;border-radius:14px;color:#294e70;font-weight:800;font-size:.9rem;line-height:1.6}.tip strong{color:#d15a25}
+    .practice{padding:24px;min-height:540px}.practice-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.eyebrow{font-size:.84rem;color:#5881a2;font-weight:900;letter-spacing:.06em}.practice h2{font-size:clamp(1.3rem,2.4vw,1.8rem);margin:6px 0 20px}.practice-grid{display:grid;grid-template-columns:minmax(240px,.85fr) minmax(0,1.15fr);gap:24px;align-items:center}.practice-clock{max-width:250px;margin:auto}.practice-clock-label{text-align:center;font-weight:900;margin:14px 0 0}.feedback{margin-top:20px;border-radius:18px;padding:16px 18px;background:#e9f6fc;font-weight:800;line-height:1.65;min-height:90px}.feedback.success{background:#e4f8ec;color:#16603b}.feedback.retry{background:#fff4e6;color:#8e4b17}.practice-steps{margin:12px 0 0;padding-left:1.4em;font-size:.92rem;font-weight:700;line-height:1.6}.new-question{margin-top:17px}.hidden{display:none!important}
+    @media(max-width:980px){.study-layout{grid-template-columns:1fr}.guide{border-left:0;border-top:2px solid #e0edf7}.guide .steps{grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}.tip{margin-top:16px}.control-bar{gap:14px}.stage{padding:18px}}
+    @media(max-width:650px){.app{padding:12px 10px 24px}.header-note{display:none}.brand-mark{width:42px;height:42px}.tabs{margin-bottom:10px}.tab{flex:1;padding:11px}.panel{border-radius:18px}.control-bar{padding:14px}.control-group{width:100%}.operation-grid{display:grid;grid-template-columns:repeat(2,1fr)}.op-button{padding:7px}.stage{padding:16px 12px 22px}.clock-wrap,.current .clock-wrap{width:100%}.clocks{gap:3px}.travel-sign{width:30px;font-size:1.6rem}.clock-caption{font-size:.75rem;padding:4px 9px}.time-readout{font-size:.97rem}.guide{padding:18px}.practice{padding:18px 14px}.practice-grid{grid-template-columns:1fr;gap:16px}.practice-clock{width:195px}.practice h2{margin-bottom:8px}}
+    @media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="header"><div class="brand"><div class="brand-mark" aria-hidden="true">◷</div><div><h1>とけいのたび</h1><small>時計と時こく</small></div></div><div class="header-note">小学校３年生の算数</div></header>
+    <div class="tabs" role="tablist" aria-label="学習のしかた"><button class="tab" id="tab-explore" role="tab" aria-selected="true" aria-controls="explore">時計をうごかす</button><button class="tab" id="tab-practice" role="tab" aria-selected="false" aria-controls="practice">もんだいにちょうせん</button></div>
+    <section class="panel explore" id="explore" role="tabpanel" aria-labelledby="tab-explore">
+      <div class="control-bar">
+        <div class="control-group"><span class="group-label">① はじめの時こく</span><div class="time-select"><select id="start-hour" aria-label="はじめの時"></select>時 <select id="start-minute" aria-label="はじめの分"></select>分</div></div>
+        <div class="control-group"><span class="group-label">② どちらにうごかす？</span><div class="operation-grid" id="operations"><button class="op-button active" data-op="after-min" aria-pressed="true">何分後</button><button class="op-button" data-op="before-min" aria-pressed="false">何分前</button><button class="op-button" data-op="after-hour" aria-pressed="false">何時間後</button><button class="op-button" data-op="before-hour" aria-pressed="false">何時間前</button></div></div>
+        <div class="control-group"><span class="group-label">③ どれくらい？</span><div class="amount-control"><button class="stepper" id="amount-down" aria-label="数をへらす">−</button><span class="amount-value" id="amount-value">35分</span><button class="stepper" id="amount-up" aria-label="数をふやす">＋</button></div></div>
+      </div>
+      <div class="study-layout"><div class="stage"><p class="question-label">いっしょに やってみよう</p><h2 class="question" id="explore-question"></h2><div class="clocks"><div class="clock-card"><div class="clock-caption">はじめ</div><div class="clock-wrap" id="start-clock"></div><div class="time-readout" id="start-readout"></div></div><div class="travel-sign" id="travel-sign" aria-hidden="true">→</div><div class="clock-card current"><div class="clock-caption" id="current-caption">うごかす時計</div><div class="clock-wrap" id="current-clock"></div><div class="time-readout" id="current-readout" aria-live="polite"></div></div></div><p class="instruction" id="explore-instruction"><span class="instruction-icon" aria-hidden="true">☝</span><span></span></p><div class="progress" role="progressbar" aria-label="時計をうごかした量" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress"><div class="progress-fill" id="progress-fill"></div></div><p class="progress-text" id="progress-text"></p><div class="stage-actions"><button class="secondary" id="reset" disabled>はじめにもどす</button></div></div><aside class="guide"><h2>時計のうごき</h2><p class="guide-intro">はりを回すと、時こくもいっしょに変わるよ。</p><div class="steps" id="steps"></div><div class="tip" id="tip"></div></aside></div>
+    </section>
+    <section class="panel practice hidden" id="practice" role="tabpanel" aria-labelledby="tab-practice"><div class="practice-top"><span class="eyebrow">はりを回して こたえよう</span><span class="eyebrow" id="question-count"></span></div><h2 id="practice-question"></h2><div class="practice-grid"><div><div class="practice-clock" id="practice-clock"></div><p class="practice-clock-label" id="practice-start"></p><p class="practice-clock-label" id="practice-readout" aria-live="polite"></p></div><div><p class="instruction" id="practice-instruction"><span class="instruction-icon" aria-hidden="true">☝</span><span></span></p><div class="feedback" id="feedback" role="status" aria-live="polite">時計のはりを回して、時こくをたしかめよう。</div><div class="stage-actions"><button class="primary" id="check-answer">こたえあわせ</button><button class="secondary" id="practice-reset">はじめにもどす</button></div><button class="secondary new-question" id="new-question">つぎの もんだい</button></div></div></section>
+  </main>
+  <script>
+    const $=id=>document.getElementById(id);
+    const mod=n=>(n%720+720)%720;
+    const hourOf=t=>Math.floor(mod(t)/60)||12;
+    const minuteOf=t=>mod(t)%60;
+    const timeText=t=>`${hourOf(t)}時${minuteOf(t)===0?'ちょうど':minuteOf(t)+'分'}`;
+    const clockText=t=>`${hourOf(t)}時${String(minuteOf(t)).padStart(2,'0')}分`;
+    const ops={"after-min":{dir:1,unit:"分",end:"後"},"before-min":{dir:-1,unit:"分",end:"前"},"after-hour":{dir:1,unit:"時間",end:"後"},"before-hour":{dir:-1,unit:"時間",end:"前"}};
+    const state={start:3*60+40,op:"after-min",amount:35,moved:0,raw:0,steps:[]};
+    const coords=(angle,r)=>({x:150+Math.sin(angle*Math.PI/180)*r,y:150-Math.cos(angle*Math.PI/180)*r});
+    function clockSvg(t,label,activeHand=null,max=0,moved=0){
+      const marks=Array.from({length:60},(_,i)=>{const a=coords(i*6,i%5===0?119:123),b=coords(i*6,129);return `<line x1="${a.x}" y1="${a.y}" x2="${b.x}" y2="${b.y}" stroke="${i%5===0?'#668aaa':'#bfd2e0'}" stroke-width="${i%5===0?3:1.5}" stroke-linecap="round"/>`}).join('');
+      const nums=Array.from({length:12},(_,i)=>{const n=i+1,p=coords(n*30,101);return `<text x="${p.x}" y="${p.y}" dominant-baseline="central" text-anchor="middle" font-size="21" font-weight="900" fill="#1d4368">${n}</text>`}).join('');
+      const ha=(hourOf(t)%12)*30+minuteOf(t)*.5,ma=minuteOf(t)*6;
+      const hand=(kind,angle)=>{const minute=kind==='minute',selected=kind===activeHand,tip=minute?54:83,color=minute?'#ef783b':'#1a4772';return `<g data-hand="${kind}" transform="rotate(${angle} 150 150)" ${selected?`class="hand-focus" tabindex="0" role="slider" aria-label="${minute?'長い':'短い'}はりを回す" aria-valuemin="0" aria-valuemax="${max}" aria-valuenow="${moved}" aria-valuetext="${clockText(t)}"`:''}><line x1="150" y1="${minute?162:157}" x2="150" y2="${tip}" stroke="${color}" stroke-width="${minute?7:11}" stroke-linecap="round"/>${selected?`<circle class="hand-glow" cx="150" cy="${tip}" r="22" fill="#fff8e9" stroke="${color}" stroke-width="3"/><circle class="hand-knob" cx="150" cy="${tip}" r="12" fill="${color}"/><line class="hand-hit" x1="150" y1="145" x2="150" y2="${tip}"/></g>`:'</g>'}`};
+      const hands=activeHand==='hour'?hand('minute',ma)+hand('hour',ha):hand('hour',ha)+hand('minute',ma);
+      return `<svg class="clock-svg ${activeHand?'drag-clock':''}" viewBox="0 0 300 300" role="${activeHand?'group':'img'}" aria-label="${label} ${clockText(t)}"><circle cx="150" cy="150" r="145" fill="#d7e8f5"/><circle cx="150" cy="145" r="140" fill="#fff" stroke="#2d6594" stroke-width="7"/>${marks}${nums}${hands}<circle cx="150" cy="150" r="8" fill="#1a4772"/><circle cx="150" cy="150" r="3.5" fill="#fff"/></svg>`;
+    }
+    function updateClock(container,t,max,moved){
+      const svg=container.querySelector('svg');if(!svg)return;
+      svg.setAttribute('aria-label',`うごかす時計 ${clockText(t)}`);
+      svg.querySelector('[data-hand="hour"]').setAttribute('transform',`rotate(${(hourOf(t)%12)*30+minuteOf(t)*.5} 150 150)`);
+      svg.querySelector('[data-hand="minute"]').setAttribute('transform',`rotate(${minuteOf(t)*6} 150 150)`);
+      const slider=svg.querySelector('[role="slider"]');slider.setAttribute('aria-valuemax',max);slider.setAttribute('aria-valuenow',moved);slider.setAttribute('aria-valuetext',clockText(t));
+    }
+    function makeSteps(start,op,amount){
+      const {dir,unit}=ops[op];let time=start,remaining=amount,steps=[];
+      if(unit==='時間'){
+        for(let i=0;i<amount;i++){time=mod(time+dir*60);steps.push({time,minutes:60,label:`1時間${dir===1?'すすむ':'もどる'}`});}
+      }else{
+        while(remaining>0){const m=minuteOf(time);let until=dir===1?60-m:m;if(until===0)until=60;const n=Math.min(remaining,until);time=mod(time+dir*n);remaining-=n;steps.push({time,minutes:n,label:`${n}分${dir===1?'すすむ':'もどる'}`});}
+      }
+      return steps;
+    }
+    function rebuild(){state.moved=0;state.raw=0;state.steps=makeSteps(state.start,state.op,state.amount);renderExplore(true);}
+    function renderExplore(resetClock=false){
+      const o=ops[state.op],isHour=o.unit==='時間',done=state.moved===state.amount;
+      const current=mod(state.start+o.dir*state.moved*(isHour?60:1));
+      $('explore-question').textContent=`${timeText(state.start)}から ${state.amount}${o.unit}${o.end}は？`;
+      if(resetClock){$('start-clock').innerHTML=clockSvg(state.start,'はじめ');$('current-clock').innerHTML=clockSvg(current,'うごかす時計',isHour?'hour':'minute',state.amount,0);}
+      else updateClock($('current-clock'),current,state.amount,state.moved);
+      $('start-readout').textContent=clockText(state.start);$('current-readout').textContent=clockText(current);$('current-caption').textContent=done?'こたえ':'うごかす時計';
+      $('travel-sign').textContent=o.dir===1?'→':'←';$('amount-value').textContent=state.amount+o.unit;
+      const pct=Math.round(state.moved/state.amount*100);
+      $('progress-fill').style.width=pct+'%';$('progress').setAttribute('aria-valuenow',pct);
+      $('progress-text').textContent=done?'できた！ 時計のはりと時こくをたしかめよう。':`${state.moved}${o.unit} うごかしたよ。あと ${state.amount-state.moved}${o.unit}。`;
+      let passed=0;$('steps').innerHTML=state.steps.map((s,i)=>{passed+=isHour?1:s.minutes;const complete=state.moved>=passed,active=!complete&&state.moved>=passed-(isHour?1:s.minutes);return `<div class="step ${complete?'done':active?'next':''}"><span class="step-number">${complete?'✓':i+1}</span><span class="step-copy">${complete||active?s.label:'つぎの 1歩'}<small>${complete?clockText(s.time):active?`あと ${passed-state.moved}${o.unit} で この区切り`:'まだ ひみつ'}</small></span></div>`;}).join('');
+      $('tip').innerHTML=isHour?'1時間で、<strong>短いはりは数字を1つ</strong>うごくよ。長いはりの場所はそのまま。':done?'長いはりが数字を1つ進むと <strong>5分</strong>。時をまたいだら、短いはりも次の時に進むよ。':'<strong>○時ちょうど</strong> を通るときは、そこで分けて考えるとわかりやすいよ。';
+      $('explore-instruction').lastElementChild.innerHTML=done?'ぴったりの時こくまで うごかせたね！':`右の時計の <strong>${isHour?'青い短い':'オレンジの長い'}はり</strong> を指でつかみ、${o.dir===1?'右回り':'左回り'}に回そう。`;
+      $('reset').disabled=state.moved===0;
+      document.querySelectorAll('.op-button').forEach(b=>{const active=b.dataset.op===state.op;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
+    }
+    for(let h=1;h<=12;h++)$('start-hour').add(new Option(h,h));
+    for(let m=0;m<60;m+=5)$('start-minute').add(new Option(String(m).padStart(2,'0'),m));
+    $('start-hour').value=3;$('start-minute').value=40;
+    function changeStart(){state.start=(Number($('start-hour').value)%12)*60+Number($('start-minute').value);rebuild();}
+    $('start-hour').addEventListener('change',changeStart);$('start-minute').addEventListener('change',changeStart);
+    $('operations').addEventListener('click',e=>{const b=e.target.closest('[data-op]');if(!b)return;const wasHour=ops[state.op].unit==='時間';state.op=b.dataset.op;if(wasHour!== (ops[state.op].unit==='時間'))state.amount=ops[state.op].unit==='時間'?2:35;rebuild();});
+    function changeAmount(delta){const max=ops[state.op].unit==='時間'?11:120;state.amount=Math.max(1,Math.min(max,state.amount+delta));rebuild();}
+    $('amount-down').addEventListener('click',()=>changeAmount(-1));$('amount-up').addEventListener('click',()=>changeAmount(1));
+    $('reset').addEventListener('click',()=>{state.moved=0;state.raw=0;renderExplore();});
+    function switchTab(name){for(const key of ['explore','practice']){const active=key===name;$('tab-'+key).setAttribute('aria-selected',String(active));$(key).classList.toggle('hidden',!active);}if(name==='practice'&&!practice.question)newQuestion();}
+    $('tab-explore').addEventListener('click',()=>switchTab('explore'));$('tab-practice').addEventListener('click',()=>switchTab('practice'));
+    document.querySelector('.tabs').addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const name=$('tab-explore').getAttribute('aria-selected')==='true'?'practice':'explore';switchTab(name);$('tab-'+name).focus();}});
+    const practice={question:null,count:0,moved:0,raw:0};
+    const rand=(min,max)=>Math.floor(Math.random()*(max-min+1))+min;
+    function practiceTime(){const q=practice.question,o=ops[q.op];return mod(q.start+o.dir*practice.moved*(o.unit==='時間'?60:1));}
+    function renderPractice(resetClock=false){
+      const q=practice.question,o=ops[q.op],hour=o.unit==='時間',t=practiceTime(),max=hour?11:120;
+      if(resetClock)$('practice-clock').innerHTML=clockSvg(t,'もんだいの時計',hour?'hour':'minute',max,practice.moved);
+      else updateClock($('practice-clock'),t,max,practice.moved);
+      $('practice-readout').textContent=`いま ${clockText(t)}`;
+      $('practice-instruction').lastElementChild.innerHTML=`<strong>${hour?'青い短い':'オレンジの長い'}はり</strong> を${o.dir===1?'右回り':'左回り'}に回そう。`;
+      $('practice-reset').disabled=practice.moved===0;
+    }
+    function newQuestion(){
+      const op=Object.keys(ops)[rand(0,3)],o=ops[op],start=(rand(1,12)%12)*60+rand(0,11)*5,amount=o.unit==='時間'?rand(1,3):[10,15,20,25,30,35,40,45,50][rand(0,8)];
+      const correct=mod(start+o.dir*amount*(o.unit==='時間'?60:1));
+      practice.question={start,op,amount,correct};practice.count++;practice.moved=0;practice.raw=0;
+      $('question-count').textContent=`第 ${practice.count} 問`;
+      $('practice-question').textContent=`${timeText(start)}の ${amount}${o.unit}${o.end}は 何時何分？`;
+      $('practice-start').textContent=`はじめは ${clockText(start)}`;renderPractice(true);
+      $('feedback').className='feedback';$('feedback').textContent='時計のはりを回して、時こくをたしかめよう。';
+    }
+    $('check-answer').addEventListener('click',()=>{
+      const q=practice.question,correct=practice.moved===q.amount;
+      if(correct){const steps=makeSteps(q.start,q.op,q.amount);const lines=steps.map((s,i)=>`<li>${i===0?clockText(q.start):clockText(steps[i-1].time)} から ${s.label} → ${clockText(s.time)}</li>`).join('');$('feedback').className='feedback success';$('feedback').innerHTML=`せいかい！ <strong>${clockText(q.correct)}</strong> だね。<ol class="practice-steps">${lines}</ol>`;}
+      else{$('feedback').className='feedback retry';$('feedback').textContent=`いまは ${clockText(practiceTime())}。${practice.moved<q.amount?'もう少し、同じ向きに':'少し、反対向きに'} はりを回してみよう。`;}
+    });
+    $('practice-reset').addEventListener('click',()=>{practice.moved=0;practice.raw=0;renderPractice();$('feedback').className='feedback';$('feedback').textContent='はじめの時こくにもどったよ。';});
+    $('new-question').addEventListener('click',newQuestion);
+    let drag=null;
+    function pointerAngle(e,svg){const r=svg.getBoundingClientRect(),x=e.clientX-(r.left+r.width/2),y=e.clientY-(r.top+r.height/2);if(Math.hypot(x,y)<r.width*.08)return null;return (Math.atan2(x,-y)*180/Math.PI+360)%360;}
+    function installHandControl(id,mode){
+      const container=$(id);
+      container.addEventListener('pointerdown',e=>{
+        if(e.pointerType==='mouse'&&e.button!==0)return;
+        const hand=e.target.closest('[data-hand]'),svg=container.querySelector('svg');
+        if(!hand||!hand.classList.contains('hand-focus')||!svg)return;
+        const angle=pointerAngle(e,svg);if(angle===null)return;
+        e.preventDefault();hand.focus();svg.setPointerCapture(e.pointerId);svg.classList.add('dragging');drag={mode,pointerId:e.pointerId,svg,lastAngle:angle};
+      });
+      container.addEventListener('pointermove',e=>{
+        if(!drag||drag.mode!==mode||drag.pointerId!==e.pointerId)return;
+        const angle=pointerAngle(e,drag.svg);if(angle===null)return;
+        let delta=angle-drag.lastAngle;if(delta>180)delta-=360;if(delta< -180)delta+=360;drag.lastAngle=angle;
+        const unit=mode==='explore'?ops[state.op]:ops[practice.question.op],model=mode==='explore'?state:practice,max=mode==='explore'?state.amount:unit.unit==='時間'?11:120;
+        model.raw=Math.max(0,Math.min(max,model.raw+delta*unit.dir/(unit.unit==='時間'?30:6)));
+        const moved=Math.round(model.raw);if(moved!==model.moved){model.moved=moved;if(mode==='explore')renderExplore();else renderPractice();}
+      });
+      const end=e=>{if(drag?.mode!==mode||drag.pointerId!==e.pointerId)return;drag.svg.classList.remove('dragging');if(drag.svg.hasPointerCapture(e.pointerId))drag.svg.releasePointerCapture(e.pointerId);drag=null;};
+      container.addEventListener('pointerup',end);container.addEventListener('pointercancel',end);
+      container.addEventListener('keydown',e=>{
+        if(!e.target.matches('[role="slider"]')||!['ArrowRight','ArrowLeft','ArrowUp','ArrowDown'].includes(e.key))return;
+        e.preventDefault();const unit=mode==='explore'?ops[state.op]:ops[practice.question.op],model=mode==='explore'?state:practice,max=mode==='explore'?state.amount:unit.unit==='時間'?11:120;
+        const clockwise=e.key==='ArrowRight'||e.key==='ArrowUp';model.moved=Math.max(0,Math.min(max,model.moved+(clockwise?unit.dir:-unit.dir)));model.raw=model.moved;
+        if(mode==='explore')renderExplore();else renderPractice();
+      });
+    }
+    installHandControl('current-clock','explore');installHandControl('practice-clock','practice');
+    rebuild();
+    if(document.modelContext?.registerTool){
+      try{Promise.resolve(document.modelContext.registerTool({name:'configure_clock_lesson',title:'時計の学習を設定する',description:'はじめの時刻と何分後・何時間前などを設定し、画面の時計と学習手順を更新します。',inputSchema:{type:'object',properties:{hour:{type:'integer',minimum:1,maximum:12},minute:{type:'integer',minimum:0,maximum:55,multipleOf:5},operation:{type:'string',enum:Object.keys(ops)},amount:{type:'integer',minimum:1,maximum:120}},required:['hour','minute','operation','amount'],additionalProperties:false},annotations:{readOnlyHint:false,untrustedContentHint:false},execute(input){const {hour,minute,operation,amount}=input??{};if(!Number.isInteger(hour)||hour<1||hour>12||!Number.isInteger(minute)||minute<0||minute>55||minute%5||!ops[operation]||!Number.isInteger(amount)||amount<1||amount>(ops[operation].unit==='時間'?11:120))throw new Error('時刻または動かす量が正しくありません');state.start=(hour%12)*60+minute;state.op=operation;state.amount=amount;$('start-hour').value=hour;$('start-minute').value=minute;switchTab('explore');rebuild();return {question:$('explore-question').textContent,steps:state.steps.length};}})).catch(()=>{});}catch(e){}
+      try{Promise.resolve(document.modelContext.registerTool({name:'move_clock_hand',title:'時計のはりを動かす',description:'学習画面の選択中のはりを、はじめの時刻から指定した分または時間だけ動かします。',inputSchema:{type:'object',properties:{moved:{type:'integer',minimum:0,maximum:120}},required:['moved'],additionalProperties:false},annotations:{readOnlyHint:false,untrustedContentHint:false},execute(input){const moved=input?.moved;if(!Number.isInteger(moved)||moved<0||moved>state.amount)throw new Error('動かす量が設定範囲外です');switchTab('explore');state.moved=moved;state.raw=moved;renderExplore();return {time:clockText(mod(state.start+ops[state.op].dir*moved*(ops[state.op].unit==='時間'?60:1))),complete:moved===state.amount};}})).catch(()=>{});}catch(e){}
+    }
+  </script>
+</body>
+</html>
